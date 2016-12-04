@@ -87,7 +87,10 @@ class FastStyleTransfer:
         self.batch_size = batch_size
         self.batch_shape = (batch_size,) + content_shape
 
-        self.input_batch = tf.placeholder(tf.float32, shape=self.batch_shape, name="input_batch")
+        self.input_batch = tf.placeholder(tf.float32,
+                                          shape=self.batch_shape,
+                                          name="input_batch")
+
         self.stylized_image = transform.net(self.input_batch/255.0)
 
         loss_calculator = LossCalculator(vgg, self.stylized_image)
@@ -118,8 +121,8 @@ class FastStyleTransfer:
         losses['total'] = self.loss.eval(feed_dict=feed_dict)
         return losses
 
-    def train(self, content_training_images,
-        learning_rate, epochs, checkpoint_iterations):
+    def train(self, content_training_images,learning_rate,
+              epochs, checkpoint_iterations):
 
         def is_checkpoint_iteration(i):
             return (checkpoint_iterations and i % checkpoint_iterations == 0)
@@ -127,21 +130,16 @@ class FastStyleTransfer:
         def print_progress(i):
             stdout.write('Iteration %d\n' % (i + 1))
 
-        best_loss = float('inf')
-        best = None
+        train_step = tf.train.AdamOptimizer(learning_rate).minimize(self.loss)
 
         with tf.Session() as sess:
-            train_step = tf.train.AdamOptimizer(learning_rate).minimize(self.loss)
             sess.run(tf.initialize_all_variables())
             iterations = 0
             for epoch in range(epochs):
                 for i in range(0, len(content_training_images), self.batch_size):
                     print_progress(iterations)
 
-                    batch = np.zeros(self.batch_shape, dtype=np.float32)
-
-                    for j, img_path in enumerate(content_training_images[i: i+self.batch_size]):
-                        batch[j] = utils.load_image(img_path, img_size=self.batch_shape[1:])
+                    batch = self._load_batch(content_training_images[i: i+self.batch_size])
 
                     train_step.run(feed_dict={self.input_batch:batch})
 
@@ -154,34 +152,13 @@ class FastStyleTransfer:
                        )
                     iterations += 1
 
-def calculate_style_gram_matrix_for(network, image, layer, style_image):
-    image_feature = network[layer].eval(feed_dict={image: style_image})
-    image_feature = np.reshape(image_feature, (-1, image_feature.shape[3]))
-    return np.matmul(image_feature.T, image_feature) / image_feature.size
+    def _load_batch(self, image_paths):
+        batch = np.zeros(self.batch_shape, dtype=np.float32)
+        for j, img_path in enumerate(image_paths):
+            batch[j] = utils.load_image(img_path, img_size=self.batch_shape[1:])
+        return batch
 
-def calculate_input_gram_matrix_for(network, layer):
-    image_feature = network[layer]
-    batch_size, height, width, number = map(lambda i: i.value, image_feature.get_shape())
-    size = height * width * number
-    image_feature = tf.reshape(image_feature, (batch_size, height * width, number))
-    return tf.batch_matmul(tf.transpose(image_feature, perm=[0,2,1]), image_feature) / size
-
-def tv_loss(image, shape, tv_weight):
-    # total variation denoising
-    tv_y_size = _tensor_size(image[:,1:,:,:])
-    tv_x_size = _tensor_size(image[:,:,1:,:])
-    tv_loss = tv_weight * 2 * (
-            (tf.nn.l2_loss(image[:,1:,:,:] - image[:,:shape[1]-1,:,:]) /
-                tv_y_size) +
-            (tf.nn.l2_loss(image[:,:,1:,:] - image[:,:,:shape[2]-1,:]) /
-                tv_x_size))
-
-    return tv_loss
 
 def _tensor_size(tensor):
     from operator import mul
     return reduce(mul, (d.value for d in tensor.get_shape()), 1)
-
-
-# wrapper
-# transform network

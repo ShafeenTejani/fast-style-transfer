@@ -18,21 +18,6 @@ def net(image):
     preds = tf.nn.tanh(conv_t3)
     output = image + preds
     return tf.nn.tanh(output) * 127.5 + 255./2
-    #preds = tf.nn.tanh(conv_t3) * 127.5 + 255./2
-    #return preds
-
-
-    # conv1 = _conv_layer(image, 32, 3, 1)
-    # conv2 = _conv_layer(conv1, 64, 3, 1)
-    # conv3 = _conv_layer(conv2, 128, 3, 1)
-    # resid1 = _residual_block(conv3, 3)
-    # resid2 = _residual_block(resid1, 3)
-    # conv4 = _conv_layer(resid2, 64, 3, 1)
-    # conv5 = _conv_layer(conv4, 32, 3, 1)
-    # conv6 = _conv_layer(conv5, 3, 3, 1, relu=False)
-    # preds = tf.nn.tanh(conv6) * 127.5 + 255./2
-    # return preds
-
 
 
 
@@ -51,8 +36,7 @@ def _conv_tranpose_layer(net, num_filters, filter_size, strides):
 
     batch_size, rows, cols, in_channels = [i.value for i in net.get_shape()]
     new_rows, new_cols = int(rows * strides), int(cols * strides)
-    # new_shape = #tf.pack([tf.shape(net)[0], new_rows, new_cols, num_filters])
-
+    
     new_shape = [batch_size, new_rows, new_cols, num_filters]
     tf_shape = tf.pack(new_shape)
     strides_shape = [1,strides,strides,1]

@@ -1,0 +1,9 @@
+*.pyc
+*.mat
+*.jpg
+*.png
+checkpoint
+*.ckpt.meta
+*.ckpt
+.DS_Store
+

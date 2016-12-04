@@ -80,7 +80,8 @@ def load_image(image_path, img_size=None):
         img = np.dstack((img, img, img))
 
     if (img_size is not None):
-        img = imresize(img, img_size)
+        print img.shape
+        img = scipy.misc.imresize(img, img_size)
 
     img = img.astype("float32")
     return img

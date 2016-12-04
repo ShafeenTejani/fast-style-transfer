@@ -3,6 +3,7 @@ import tensorflow as tf
 WEIGHTS_INIT_STDEV = .1
 
 def net(image):
+    image = image / 255.0
     conv1 = _conv_layer(image, 32, 9, 1)
     conv2 = _conv_layer(conv1, 64, 3, 2)
     conv3 = _conv_layer(conv2, 128, 3, 2)
@@ -20,7 +21,7 @@ def net(image):
     #preds = tf.nn.tanh(conv_t3) * 127.5 + 255./2
     #return preds
 
-    
+
     # conv1 = _conv_layer(image, 32, 3, 1)
     # conv2 = _conv_layer(conv1, 64, 3, 1)
     # conv3 = _conv_layer(conv2, 128, 3, 1)

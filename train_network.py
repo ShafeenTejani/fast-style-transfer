@@ -7,6 +7,7 @@ from os.path import exists
 from sys import stdout
 
 import math
+import utils
 from fast_style_transfer import FastStyleTransfer
 from argparse import ArgumentParser
 import tensorflow as tf
@@ -87,40 +88,23 @@ def check_opts(opts):
     assert opts.tv_weight >= 0
     assert opts.learning_rate >= 0
 
-def _get_files(img_dir):
-    files = list_files(img_dir)
-    return map(lambda x: os.path.join(img_dir,x), files)
-
-def load_image(image_path, img_size=None):
-    assert exists(image_path), "image {} does not exist".format(image_path)
-    img = scipy.misc.imread(image_path)
-    if (len(img.shape) != 3) or (img.shape[2] != 3):
-        img = np.dstack((img, img, img))
-
-    if (img_size is not None):
-        img = imresize(img, img_size)
-
-    img = img.astype("float32")
-    return img
-
 
 def main():
     parser = build_parser()
     options = parser.parse_args()
     check_opts(options)
 
-    if not os.path.isfile(VGG_PATH):
-        parser.error("Network %s does not exist." % VGG_PATH)
-
-    style_image = load_image(options.style)
+    style_image = utils.load_image(options.style)
     style_image = np.ndarray.reshape(style_image, (1,) + style_image.shape)
 
-    content_targets = _get_files(options.train_path)
-
+    content_targets = utils.get_files(options.train_path)
+    content_shape = utils.load_image(content_targets[0]).shape
+    print content_shape
 
     style_transfer = FastStyleTransfer(
         vgg_path=VGG_PATH,
         style_image=style_image,
+        content_shape=content_shape,
         content_weight=options.content_weight,
         style_weight=options.style_weight,
         tv_weight=options.style_weight,
@@ -137,11 +121,8 @@ def main():
         saver = tf.train.Saver()
         if (iteration % 100 == 0):
             saver.save(network, 'networks/fast_style_network.ckpt')
-        save_image(first_image, 'outputs/iteration_' + str(iteration) + '.png')
+        utils.save_image(first_image, 'outputs/iteration_' + str(iteration) + '.png')
 
-
-def save_image(img, path):
-    scipy.misc.imsave(path, np.clip(img, 0, 255).astype(np.uint8))
 
 def print_losses(losses):
     stdout.write('  content loss: %g\n' % losses['content'])
@@ -149,14 +130,6 @@ def print_losses(losses):
     stdout.write('       tv loss: %g\n' % losses['total_variation'])
     stdout.write('    total loss: %g\n' % losses['total'])
 
-
-def list_files(in_path):
-    files = []
-    for (dirpath, dirnames, filenames) in os.walk(in_path):
-        files.extend(filenames)
-        break
-
-    return files
 
 if __name__ == '__main__':
     main()

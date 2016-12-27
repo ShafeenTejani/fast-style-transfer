@@ -9,7 +9,7 @@ from argparse import ArgumentParser
 import tensorflow as tf
 import transform
 
-NETWORK_PATH='saved_networks'
+NETWORK_PATH='networks'
 
 def build_parser():
     parser = ArgumentParser()
@@ -47,7 +47,7 @@ def main():
     content_image = np.ndarray.reshape(content_image, (1,) + content_image.shape)
 
     prediction = ffwd(content_image, network)
-    utils.save_image(options.output_path, prediction)
+    utils.save_image(prediction, options.output_path)
 
 
 def ffwd(content, network_path):

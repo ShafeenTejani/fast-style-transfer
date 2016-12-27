@@ -21,7 +21,6 @@ NUM_EPOCHS=2000
 BATCH_SIZE=3
 VGG_PATH = 'imagenet-vgg-verydeep-19.mat'
 CHECKPOINT_ITERATIONS = 1
-TRAIN_PATH = 'train_simple'
 
 def build_parser():
     parser = ArgumentParser()
@@ -32,7 +31,7 @@ def build_parser():
 
     parser.add_argument('--train-path', type=str,
                         dest='train_path', help='path to training images folder',
-                        metavar='TRAIN_PATH', default=TRAIN_PATH)
+                        metavar='TRAIN_PATH', required=True)
 
     parser.add_argument('--epochs', type=int,
                         dest='epochs', help='num epochs',

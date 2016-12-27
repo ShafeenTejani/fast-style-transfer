@@ -42,8 +42,9 @@ class LossCalculator:
 
             return style_weight * (style_loss)
 
-    def tv_loss(self, image, shape, tv_weight):
+    def tv_loss(self, image, tv_weight):
         # total variation denoising
+        shape = tuple(image.get_shape().as_list())
         tv_y_size = _tensor_size(image[:,1:,:,:])
         tv_x_size = _tensor_size(image[:,:,1:,:])
         tv_loss = tv_weight * 2 * (
@@ -68,13 +69,6 @@ class LossCalculator:
 
 
 
-        self.total_variation_loss = tv_loss(self.stylized_image, self.batch_shape, tv_weight) / batch_size
-
-        self.loss = self.content_loss  + self.style_loss + self.total_variation_loss
-
-
-
-
 class FastStyleTransfer:
     CONTENT_LAYER = 'relu4_2'
     STYLE_LAYERS = ('relu1_1', 'relu2_1', 'relu3_1', 'relu4_1', 'relu5_1')
@@ -91,7 +85,7 @@ class FastStyleTransfer:
                                           shape=self.batch_shape,
                                           name="input_batch")
 
-        self.stylized_image = transform.net(self.input_batch/255.0)
+        self.stylized_image = transform.net(self.input_batch)
 
         loss_calculator = LossCalculator(vgg, self.stylized_image)
 
@@ -107,7 +101,6 @@ class FastStyleTransfer:
 
         self.total_variation_loss = loss_calculator.tv_loss(
                                         self.stylized_image,
-                                        self.batch_shape,
                                         tv_weight) / batch_size
 
         self.loss = self.content_loss  + self.style_loss + self.total_variation_loss
@@ -153,10 +146,8 @@ class FastStyleTransfer:
                     iterations += 1
 
     def _load_batch(self, image_paths):
-        batch = np.zeros(self.batch_shape, dtype=np.float32)
-        for j, img_path in enumerate(image_paths):
-            batch[j] = utils.load_image(img_path, img_size=self.batch_shape[1:])
-        return batch
+        return np.array([utils.load_image(img_path) for j, img_path in enumerate(image_paths)])
+
 
 
 def _tensor_size(tensor):

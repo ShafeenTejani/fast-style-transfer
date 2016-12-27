@@ -1,9 +1,10 @@
 *.pyc
 *.mat
-*.jpg
 *.png
-checkpoint
+train_simple
+networks*
+outputs*
 *.ckpt.meta
 *.ckpt
 .DS_Store
-
+COCO_images*

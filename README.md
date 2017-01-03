@@ -20,7 +20,7 @@ The total loss used is the weighted sum of the style loss, the content loss and 
 
 ## Running the code
 
-### Training a network for a particuar style
+### Training a network for a particular style
 
 ```python run.py --content <content image> --style <style image> --output <output image path>```
 

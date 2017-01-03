@@ -1,3 +1,5 @@
+# Copyright (c) 2016-2017 Shafeen Tejani. Released under GPLv3.
+
 import tensorflow as tf
 
 WEIGHTS_INIT_STDEV = .1
@@ -36,7 +38,7 @@ def _conv_tranpose_layer(net, num_filters, filter_size, strides):
 
     batch_size, rows, cols, in_channels = [i.value for i in net.get_shape()]
     new_rows, new_cols = int(rows * strides), int(cols * strides)
-    
+
     new_shape = [batch_size, new_rows, new_cols, num_filters]
     tf_shape = tf.pack(new_shape)
     strides_shape = [1,strides,strides,1]

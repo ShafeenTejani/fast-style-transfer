@@ -1,3 +1,5 @@
+# Copyright (c) 2016-2017 Shafeen Tejani. Released under GPLv3.
+
 import os
 
 import numpy as np
@@ -12,7 +14,6 @@ from fast_style_transfer import FastStyleTransfer
 from argparse import ArgumentParser
 import tensorflow as tf
 
-# default arguments
 CONTENT_WEIGHT = 7.5
 STYLE_WEIGHT = 1e2
 TV_WEIGHT = 2e2

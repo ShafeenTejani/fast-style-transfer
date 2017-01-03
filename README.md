@@ -1,5 +1,5 @@
 # Real-Time Style Transfer
-A TensorFlow implementation of real-time style transfer based on the paper [Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://arxiv.org/abs/1603.08155) by Johnson et. al
+A TensorFlow implementation of real-time style transfer based on the paper [Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://arxiv.org/abs/1603.08155) by Johnson et. al.
 
 ## Algorithm
 

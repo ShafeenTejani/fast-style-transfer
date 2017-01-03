@@ -16,7 +16,7 @@ The total loss used is the weighted sum of the style loss, the content loss and 
 * For training: 
   * It is recommended to use a GPU to get good results within a reasonable timeframe.
   * You will need an image dataset to train your networks. I used the [Microsoft COCO dataset](http://mscoco.org/) and resized the images to 256x256 pixels.
-* Generation of styled images can be run on a CPU or GPU. Some pre-trained style networks have been included [here](pre-trained-networks).
+* Generation of styled images can be run on a CPU or GPU. Some pre-trained style networks can be download from [here](https://drive.google.com/open?id=0B7pvkmVwDrF8a3FCVUt5RGhQSlU).
 
 ## Running the code
 
@@ -42,7 +42,7 @@ To run the style transfer with a GPU run with the `--use-gpu` flag.
 
 ```do some stuff here```
 
-I have included 3 pre-trained networks for the 3 styles shown in the results section below. They are in the pre-trained-networks folder.
+I have made 3 3 pre-trained networks for the 3 styles shown in the results section below available. They can be downloaded from [here](https://drive.google.com/open?id=0B7pvkmVwDrF8a3FCVUt5RGhQSlU).
 
 ## Results
 

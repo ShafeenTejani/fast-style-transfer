@@ -77,7 +77,7 @@ def check_opts(opts):
     assert exists(opts.style), "style path not found!"
     assert exists(opts.train_path), "train path not found!"
 
-    assert exists(opts.vgg_path), "vgg network data not found!"
+    assert exists(opts.vgg_path), "vgg network not found!"
     assert opts.epochs > 0
     assert opts.batch_size > 0
     assert opts.checkpoint_iterations > 0

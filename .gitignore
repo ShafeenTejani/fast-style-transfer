@@ -1,5 +1,6 @@
 *.pyc
 *.mat
+*.gz
 train_simple
 networks*
 outputs*

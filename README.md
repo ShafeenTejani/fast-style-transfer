@@ -40,9 +40,9 @@ To run the style transfer with a GPU run with the `--use-gpu` flag.
 
 ### Using a trained network to generate a style transfer
 
-```do some stuff here```
+```python stylize_image.py --content <content image> --network-path <network directory> --output-path <output filename>```
 
-I have made 3 3 pre-trained networks for the 3 styles shown in the results section below available. They can be downloaded from [here](https://drive.google.com/open?id=0B7pvkmVwDrF8a3FCVUt5RGhQSlU) (~700MB).
+I have made the pre-trained networks for the 3 styles shown in the results section below available. They can be downloaded from [here](https://drive.google.com/open?id=0B7pvkmVwDrF8a3FCVUt5RGhQSlU) (~700MB).
 
 ## Results
 

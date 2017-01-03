@@ -22,25 +22,25 @@ The total loss used is the weighted sum of the style loss, the content loss and 
 
 ### Training a network for a particular style
 
-```python run.py --content <content image> --style <style image> --output <output image path>```
+```python train_network.py --style <style image> --train-path <path to training images>```
 
 The algorithm will run with the following settings:
 
 ```python 
-ITERATIONS = 1000    # override with --iterations argument
-LEARNING_RATE = 1e1  # override with --learning-rate argument
-CONTENT_WEIGHT = 5e1 # override with --content-weight argument
-STYLE_WEIGHT = 1e2   # override with --style-weight argument
-TV_WEIGHT = 1e2      # override with --tv-weight argument
-```
-
-By default the style transfer will start with a random noise image and optimise it to generate an output image. To start with a particular image (for example the content image) run with the `--initial <initial image>` argument.
+NUM_EPOCHS=5          # override with --epochs argument
+BATCH_SIZE=4          # override with --batch-size argument
+LEARNING_RATE = 1e-3  # override with --learning-rate argument
+CONTENT_WEIGHT = 7.5  # override with --content-weight argument
+STYLE_WEIGHT = 1e2    # override with --style-weight argument
+TV_WEIGHT = 2e2       # override with --tv-weight argument
     
-To run the style transfer with a GPU run with the `--use-gpu` flag.
+To train the network using a GPU run with the `--use-gpu` flag.
 
 ### Using a trained network to generate a style transfer
 
 ```python stylize_image.py --content <content image> --network-path <network directory> --output-path <output filename>```
+
+To run the style transfer with a GPU run with the `--use-gpu` flag.
 
 I have made the pre-trained networks for the 3 styles shown in the results section below available. They can be downloaded from [here](https://drive.google.com/open?id=0B7pvkmVwDrF8a3FCVUt5RGhQSlU) (~700MB).
 

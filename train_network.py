@@ -21,7 +21,7 @@ LEARNING_RATE = 1e-3
 NUM_EPOCHS=2000
 BATCH_SIZE=3
 VGG_PATH = 'imagenet-vgg-verydeep-19.mat'
-CHECKPOINT_ITERATIONS = 1
+CHECKPOINT_ITERATIONS = 100
 
 def build_parser():
     parser = ArgumentParser()
@@ -121,7 +121,9 @@ def main():
         saver = tf.train.Saver()
         if (iteration % 100 == 0):
             saver.save(network, 'networks/fast_style_network.ckpt')
-        utils.save_image(first_image, 'outputs/iteration_' + str(iteration) + '.png')
+
+        saver.save(network, 'networks/fast_style_network.ckpt')
+        #utils.save_image(first_image, 'outputs/iteration_' + str(iteration) + '.png')
 
 
 def print_losses(losses):

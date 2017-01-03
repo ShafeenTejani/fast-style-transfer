@@ -33,6 +33,7 @@ LEARNING_RATE = 1e-3  # override with --learning-rate argument
 CONTENT_WEIGHT = 7.5  # override with --content-weight argument
 STYLE_WEIGHT = 1e2    # override with --style-weight argument
 TV_WEIGHT = 2e2       # override with --tv-weight argument
+```
     
 To train the network using a GPU run with the `--use-gpu` flag.
 

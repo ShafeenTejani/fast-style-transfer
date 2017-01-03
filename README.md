@@ -14,9 +14,9 @@ The total loss used is the weighted sum of the style loss, the content loss and 
 * [SciPy & NumPy](http://scipy.org/install.html)
 * Download the [pre-trained VGG network](http://www.vlfeat.org/matconvnet/models/beta16/imagenet-vgg-verydeep-19.mat) and place it in the top level of the repository (~500MB)
 * For training: 
-  * It is recommended to use a GPU to get good results within a reasonable timeframe.
-  * You will need an image dataset to train your networks. I used the [Microsoft COCO dataset](http://mscoco.org/) and resized the images to 256x256 pixels.
-* Generation of styled images can be run on a CPU or GPU. Some pre-trained style networks can be download from [here](https://drive.google.com/open?id=0B7pvkmVwDrF8a3FCVUt5RGhQSlU) (~700MB).
+  * It is recommended to use a GPU to get good results within a reasonable timeframe
+  * You will need an image dataset to train your networks. I used the [Microsoft COCO dataset](http://mscoco.org/) and resized the images to 256x256 pixels
+* Generation of styled images can be run on a CPU or GPU. Some pre-trained style networks can be download from [here](https://drive.google.com/open?id=0B7pvkmVwDrF8a3FCVUt5RGhQSlU) (~700MB)
 
 ## Running the code
 

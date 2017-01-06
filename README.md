@@ -22,7 +22,7 @@ The total loss used is the weighted sum of the style loss, the content loss and 
 
 ### Training a network for a particular style
 
-```python train_network.py --style <style image> --train-path <path to training images>```
+```python train_network.py --style <style image> --train-path <path to training images> --save-path <directory to save network>```
 
 The algorithm will run with the following settings:
 

@@ -128,7 +128,7 @@ class FastStyleTransfer:
         train_step = tf.train.AdamOptimizer(learning_rate).minimize(self.loss)
 
         with tf.Session() as sess:
-            sess.run(tf.initialize_all_variables())
+            sess.run(tf.global_variables_initializer())
             iterations = 0
             for epoch in range(epochs):
                 for i in range(0, len(content_training_images), self.batch_size):

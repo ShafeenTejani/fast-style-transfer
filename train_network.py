@@ -22,6 +22,7 @@ NUM_EPOCHS=2000
 BATCH_SIZE=3
 VGG_PATH = 'imagenet-vgg-verydeep-19.mat'
 CHECKPOINT_ITERATIONS = 100
+SAVE_PATH = 'network'
 
 def build_parser():
     parser = ArgumentParser()
@@ -33,6 +34,11 @@ def build_parser():
     parser.add_argument('--train-path', type=str,
                         dest='train_path', help='path to training images folder',
                         metavar='TRAIN_PATH', required=True)
+
+    parser.add_argument('--save-path', type=str,
+                        dest='save_path',
+                        help='directory to save network (default %(default)s)',
+                        metavar='SAVE_PATH', default=SAVE_PATH)
 
     parser.add_argument('--epochs', type=int,
                         dest='epochs', help='num epochs',
@@ -72,6 +78,7 @@ def build_parser():
                         help='learning rate (default %(default)s)',
                         metavar='LEARNING_RATE', default=LEARNING_RATE)
 
+
     return parser
 
 def check_opts(opts):
@@ -79,6 +86,7 @@ def check_opts(opts):
     assert exists(opts.train_path), "train path not found!"
 
     assert exists(opts.vgg_path), "vgg network not found!"
+    assert exists(opts.save_path), "save path not found!"
     assert opts.epochs > 0
     assert opts.batch_size > 0
     assert opts.checkpoint_iterations > 0
@@ -99,7 +107,6 @@ def main():
 
     content_targets = utils.get_files(options.train_path)
     content_shape = utils.load_image(content_targets[0]).shape
-    print content_shape
 
     style_transfer = FastStyleTransfer(
         vgg_path=VGG_PATH,
@@ -120,10 +127,9 @@ def main():
 
         saver = tf.train.Saver()
         if (iteration % 100 == 0):
-            saver.save(network, 'networks/fast_style_network.ckpt')
+            saver.save(network, opts.save_path + '/fast_style_network.ckpt')
 
-        saver.save(network, 'networks/fast_style_network.ckpt')
-        #utils.save_image(first_image, 'outputs/iteration_' + str(iteration) + '.png')
+        saver.save(network, opts.save_path + '/fast_style_network.ckpt')
 
 
 def print_losses(losses):

@@ -3,6 +3,7 @@
 *.gz
 train_simple
 networks*
+pretrained-networks
 outputs*
 *.ckpt.meta
 *.ckpt

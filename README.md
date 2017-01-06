@@ -51,7 +51,7 @@ I trained three networks style transfers using the following three style images:
 
 ![Style Images](results/style_images.png)
 
-Each network was trained with 80,000 training images taken from the [Microsoft COCO dataset](http://mscoco.org/) and resized to 256×256 pixels. Training was carried out for 100,000 iterations with a batch size of 4 and took approximately 12 hours on a GTX 1080 GPU. Here are some of the style transfers I was able to generate:
+Each network was trained with 80,000 training images taken from the [Microsoft COCO dataset](http://mscoco.org/) and resized to 256×256 pixels. Training was carried out for 100,000 iterations with a batch size of 4 and took approximately 12 hours on a GTX 1080 GPU. Using the trained network to generate style transfers took approximately 5 seconds on a CPU. Here are some of the style transfers I was able to generate:
 
 ![Results](results/style_transfers.png)
 

@@ -72,40 +72,41 @@ class LossCalculator:
 
 
 class FastStyleTransfer:
-    CONTENT_LAYER = 'relu4_2'
-    STYLE_LAYERS = ('relu1_1', 'relu2_1', 'relu3_1', 'relu4_1', 'relu5_1')
-
+    CONTENT_LAYER = 'relu3_3'
+    STYLE_LAYERS = ('relu1_2', 'relu2_2', 'relu3_3', 'relu4_3')
+    
     def __init__(self, vgg_path,
                 style_image, content_shape, content_weight,
-                style_weight, tv_weight, batch_size):
-        vgg = vgg_network.VGG(vgg_path)
-        self.style_image = style_image
-        self.batch_size = batch_size
-        self.batch_shape = (batch_size,) + content_shape
+                style_weight, tv_weight, batch_size, device):
+        with tf.device(device):
+            vgg = vgg_network.VGG(vgg_path)
+            self.style_image = style_image
+            self.batch_size = batch_size
+            self.batch_shape = (batch_size,) + content_shape
 
-        self.input_batch = tf.placeholder(tf.float32,
-                                          shape=self.batch_shape,
-                                          name="input_batch")
+            self.input_batch = tf.placeholder(tf.float32,
+                                              shape=self.batch_shape,
+                                              name="input_batch")
 
-        self.stylized_image = transform.net(self.input_batch)
+            self.stylized_image = transform.net(self.input_batch)
 
-        loss_calculator = LossCalculator(vgg, self.stylized_image)
+            loss_calculator = LossCalculator(vgg, self.stylized_image)
 
-        self.content_loss = loss_calculator.content_loss(
-                                        self.input_batch,
-                                        self.CONTENT_LAYER,
-                                        content_weight) / self.batch_size
+            self.content_loss = loss_calculator.content_loss(
+                                            self.input_batch,
+                                            self.CONTENT_LAYER,
+                                            content_weight) / self.batch_size
 
-        self.style_loss = loss_calculator.style_loss(
-                                        self.style_image,
-                                        self.STYLE_LAYERS,
-                                        style_weight) / self.batch_size
+            self.style_loss = loss_calculator.style_loss(
+                                            self.style_image,
+                                            self.STYLE_LAYERS,
+                                            style_weight) / self.batch_size
 
-        self.total_variation_loss = loss_calculator.tv_loss(
-                                        self.stylized_image,
-                                        tv_weight) / batch_size
+            self.total_variation_loss = loss_calculator.tv_loss(
+                                            self.stylized_image,
+                                            tv_weight) / batch_size
 
-        self.loss = self.content_loss  + self.style_loss + self.total_variation_loss
+            self.loss = self.content_loss  + self.style_loss + self.total_variation_loss
 
 
     def _current_loss(self, feed_dict):

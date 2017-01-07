@@ -14,9 +14,9 @@ from fast_style_transfer import FastStyleTransfer
 from argparse import ArgumentParser
 import tensorflow as tf
 
-CONTENT_WEIGHT = 7.5
-STYLE_WEIGHT = 1e2
-TV_WEIGHT = 2e2
+CONTENT_WEIGHT = 1
+STYLE_WEIGHT = 5
+TV_WEIGHT = 1e-6
 LEARNING_RATE = 1e-3
 NUM_EPOCHS=5
 BATCH_SIZE=4

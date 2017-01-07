@@ -78,6 +78,8 @@ def build_parser():
                         help='learning rate (default %(default)s)',
                         metavar='LEARNING_RATE', default=LEARNING_RATE)
 
+    parser.add_argument('--use-gpu', dest='use_gpu', help='run on a GPU', action='store_true')
+    parser.set_defaults(use_gpu=False)
 
     return parser
 
@@ -108,6 +110,8 @@ def main():
     content_targets = utils.get_files(options.train_path)
     content_shape = utils.load_image(content_targets[0]).shape
 
+    device = '/gpu:0' if options.use_gpu else '/cpu:0'
+
     style_transfer = FastStyleTransfer(
         vgg_path=VGG_PATH,
         style_image=style_image,
@@ -115,7 +119,8 @@ def main():
         content_weight=options.content_weight,
         style_weight=options.style_weight,
         tv_weight=options.style_weight,
-        batch_size=options.batch_size)
+        batch_size=options.batch_size,
+        device=device)
 
     for iteration, network, first_image, losses in style_transfer.train(
         content_training_images=content_targets,

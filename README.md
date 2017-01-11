@@ -3,7 +3,7 @@ A TensorFlow implementation of real-time style transfer based on the paper [Perc
 
 ## Algorithm
 
-See my related blog post(link) for an overview of the algorithm for real-time style transfer.
+See my related [blog post](https://shafeentejani.github.io/2017-01-03/fast-style-transfer/) for an overview of the algorithm for real-time style transfer.
 
 The total loss used is the weighted sum of the style loss, the content loss and a total variation loss. This third component is not specfically mentioned in the original paper but leads to more cohesive images being generated.
 

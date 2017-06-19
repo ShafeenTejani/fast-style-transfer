@@ -67,14 +67,14 @@ class LossCalculator:
         batch_size, height, width, number = map(lambda i: i.value, image_feature.get_shape())
         size = height * width * number
         image_feature = tf.reshape(image_feature, (batch_size, height * width, number))
-        return tf.batch_matmul(tf.transpose(image_feature, perm=[0,2,1]), image_feature) / size
+        return tf.matmul(tf.transpose(image_feature, perm=[0,2,1]), image_feature) / size
 
 
 
 class FastStyleTransfer:
     CONTENT_LAYER = 'relu3_3'
     STYLE_LAYERS = ('relu1_2', 'relu2_2', 'relu3_3', 'relu4_3')
-    
+
     def __init__(self, vgg_path,
                 style_image, content_shape, content_weight,
                 style_weight, tv_weight, batch_size, device):

@@ -46,9 +46,12 @@ def main():
         parser.error("Network %s does not exist." % network)
 
     content_image = utils.load_image(options.content)
-    content_image = np.ndarray.reshape(content_image, (1,) + content_image.shape)
+    reshaped_content_height = (content_image.shape[0] - content_image.shape[0] % 4)
+    reshaped_content_width = (content_image.shape[1] - content_image.shape[1] % 4)
+    reshaped_content_image = content_image[:reshaped_content_height, :reshaped_content_width, :]
+    reshaped_content_image = np.ndarray.reshape(reshaped_content_image, (1,) + reshaped_content_image.shape)
 
-    prediction = ffwd(content_image, network)
+    prediction = ffwd(reshaped_content_image, network)
     utils.save_image(prediction, options.output_path)
 
 

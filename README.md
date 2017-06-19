@@ -10,7 +10,7 @@ The total loss used is the weighted sum of the style loss, the content loss and 
 ## Requirements
 
 * [Python 2.7](https://www.python.org/download/releases/2.7/)
-* [TensorFlow](https://www.tensorflow.org/versions/master/get_started/os_setup#download-and-setup)
+* [TensorFlow 1.n](https://www.tensorflow.org/install/)
 * [SciPy & NumPy](http://scipy.org/install.html)
 * Download the [pre-trained VGG network](http://www.vlfeat.org/matconvnet/models/beta16/imagenet-vgg-verydeep-19.mat) and place it in the top level of the repository (~500MB)
 * For training: 
